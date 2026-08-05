@@ -1,29 +1,75 @@
 <!DOCTYPE html>
 <html>
+<head>
+<title>Location Share</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  padding: 50px 20px;
+  background: #f2f5f8;
+}
+
+.box {
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  margin: auto;
+}
+
+button {
+  background: #0066ff;
+  color: white;
+  border: none;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-size: 18px;
+}
+
+a {
+  display: inline-block;
+  margin-top: 20px;
+}
+</style>
+
+</head>
+
 <body>
 
-<h1>Share Location</h1>
+<div class="box">
 
-<button onclick="getLocation()">Allow Location</button>
+<h1>📍 Share Location</h1>
+
+<p>Click button and allow location</p>
+
+<button onclick="getLocation()">Get My Location</button>
 
 <p id="result"></p>
 
+</div>
+
 <script>
+
 function getLocation(){
- navigator.geolocation.getCurrentPosition(function(pos){
 
- let lat = pos.coords.latitude;
- let lon = pos.coords.longitude;
+navigator.geolocation.getCurrentPosition(function(pos){
 
- let map = "https://www.google.com/maps?q=" + lat + "," + lon;
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
 
- document.getElementById("result").innerHTML =
- "Latitude: " + lat +
- "<br>Longitude: " + lon +
- "<br><br><a href='" + map + "' target='_blank'>Open Google Maps</a>";
+let map = "https://www.google.com/maps?q="+lat+","+lon;
 
- });
+document.getElementById("result").innerHTML =
+"Latitude: "+lat+
+"<br>Longitude: "+lon+
+"<br><br><a href='"+map+"' target='_blank'>Open Google Maps</a>";
+
+});
+
 }
+
 </script>
 
 </body>
