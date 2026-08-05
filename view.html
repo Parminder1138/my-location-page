@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>View Location</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body style="text-align:center;font-family:Arial;padding:40px">
+
+<h1>📍 Wife Location</h1>
+
+<p id="location">Loading...</p>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyC7gRXuZc3QcUpZe_dNy0W6hg--ugogRgc",
+  authDomain: "location-share-ae3aa.firebaseapp.com",
+  databaseURL: "https://location-share-ae3aa-default-rtdb.firebaseio.com",
+  projectId: "location-share-ae3aa",
+  storageBucket: "location-share-ae3aa.firebasestorage.app",
+  messagingSenderId: "1022725700035",
+  appId: "1:1022725700035:web:3cb0fecc974bf0115a2576"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const db = getDatabase(app);
+
+
+onValue(ref(db,"wife_location"), (snapshot)=>{
+
+let data = snapshot.val();
+
+let map =
+"https://www.google.com/maps?q="
++ data.latitude + "," + data.longitude;
+
+
+document.getElementById("location").innerHTML =
+"Latitude: "+data.latitude+
+"<br>Longitude: "+data.longitude+
+"<br><br><a href='"+map+"' target='_blank'>Open Map</a>";
+
+});
+
+
+</script>
+
+</body>
+</html>
