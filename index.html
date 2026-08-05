@@ -2,69 +2,58 @@
 <html>
 <head>
 <title>Location Share</title>
-
-<style>
-body {
-  font-family: Arial, sans-serif;
-  text-align: center;
-  padding: 50px 20px;
-  background: #f2f5f8;
-}
-
-.box {
-  background: white;
-  padding: 30px;
-  border-radius: 15px;
-  max-width: 400px;
-  margin: auto;
-}
-
-button {
-  background: #0066ff;
-  color: white;
-  border: none;
-  padding: 15px 25px;
-  border-radius: 10px;
-  font-size: 18px;
-}
-
-a {
-  display: inline-block;
-  margin-top: 20px;
-}
-</style>
-
+<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
-<body>
-
-<div class="box">
+<body style="text-align:center;font-family:Arial;padding:40px">
 
 <h1>📍 Share Location</h1>
 
-<p>Click button and allow location</p>
-
-<button onclick="getLocation()">Get My Location</button>
+<button onclick="shareLocation()">
+Share My Location
+</button>
 
 <p id="result"></p>
 
-</div>
+<script type="module">
 
-<script>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-function getLocation(){
 
-navigator.geolocation.getCurrentPosition(function(pos){
+const firebaseConfig = {
+  apiKey: "AIzaSyC7gRXuZc3QcUpZe_dNy0W6hg--ugogRgc",
+  authDomain: "location-share-ae3aa.firebaseapp.com",
+  databaseURL: "https://location-share-ae3aa-default-rtdb.firebaseio.com",
+  projectId: "location-share-ae3aa",
+  storageBucket: "location-share-ae3aa.firebasestorage.app",
+  messagingSenderId: "1022725700035",
+  appId: "1:1022725700035:web:3cb0fecc974bf0115a2576"
+};
 
-let lat = pos.coords.latitude;
-let lon = pos.coords.longitude;
 
-let map = "https://www.google.com/maps?q="+lat+","+lon;
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+
+window.shareLocation = function(){
+
+navigator.geolocation.getCurrentPosition((position)=>{
+
+let lat = position.coords.latitude;
+let lon = position.coords.longitude;
+
+
+set(ref(db, "wife_location"), {
+latitude: lat,
+longitude: lon,
+time: Date.now()
+});
+
 
 document.getElementById("result").innerHTML =
-"Latitude: "+lat+
-"<br>Longitude: "+lon+
-"<br><br><a href='"+map+"' target='_blank'>Open Google Maps</a>";
+"Location Saved ✅";
+
 
 });
 
