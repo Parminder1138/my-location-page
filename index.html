@@ -38,7 +38,7 @@ const db = getDatabase(app);
 
 window.shareLocation = function(){
 
-navigator.geolocation.getCurrentPosition((position)=>{
+navigator.geolocation.watchPosition((position)=>{
 
 let lat = position.coords.latitude;
 let lon = position.coords.longitude;
